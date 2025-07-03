@@ -1,0 +1,79 @@
+@layer variables {
+    :root {
+        /* colors */
+        --green: hsl(75, 94%, 57%);
+        --white: hsl(0, 0%, 100%);
+        --grey700: hsl(0, 0%, 20%);
+        --grey800: hsl(0, 0%, 12%);
+        --grey900: hsl(0, 0%, 8%);
+        --font: "Inter", sans-serif;
+    }
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--grey900);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    color: var(--white);
+    font-size: 14px;
+    font-family: var(--font);
+}
+
+main {
+    border: none;
+    border-radius: 0.7rem;
+    background: var(--grey800);
+    padding: 1.5rem;
+    box-shadow: 0 0.8rem 1.8rem var(--grey900);
+
+    h1 {
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    img {
+        --size: 6rem;
+        width: var(--size);
+        height: var(--size);
+        border-radius: 50%;
+        margin-bottom: 1.5rem;
+    }
+
+    p {
+        color: var(--green);
+        margin-top: .5rem;
+        font-weight: 500;
+    }
+
+    blockquote {
+        margin: 1.5rem 0;
+        opacity: 0.6;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        a {
+            text-decoration: none;
+            display: block;
+            color: var(--white);
+            transition: color 0.2s ease;
+            background: var(--grey700);
+            padding: .8rem 0;
+            font-weight: 500;
+            border-radius: .5rem;
+        }
+    }
+}
