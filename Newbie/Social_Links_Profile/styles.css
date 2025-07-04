@@ -21,8 +21,9 @@
 body {
     min-height: 100vh;
     background: var(--grey900);
-    display: grid;
-    place-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     color: var(--white);
     font-size: 14px;
@@ -34,11 +35,13 @@ main {
     border-radius: 0.7rem;
     background: var(--grey800);
     padding: 1.5rem;
+    width: 22rem;
     box-shadow: 0 0.8rem 1.8rem var(--grey900);
 
     h1 {
         font-weight: 500;
         letter-spacing: 1px;
+        font-size: 1.5rem;
     }
 
     img {
@@ -69,11 +72,16 @@ main {
             text-decoration: none;
             display: block;
             color: var(--white);
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
             background: var(--grey700);
             padding: .8rem 0;
             font-weight: 500;
             border-radius: .5rem;
+
+            &:hover {
+                background: var(--green);
+                color: var(--grey900);
+            }
         }
     }
 }
