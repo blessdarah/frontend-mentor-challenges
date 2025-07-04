@@ -108,13 +108,13 @@
                     color: #fff;
                     display: block;
                     width: 100%;
-                    border-radius: .25rem;
+                    border-radius: .5rem;
                     text-align: center;
                     font-weight: 700;
                     box-shadow: 0 .5rem 1rem var(--cyan);
                     padding: .8rem 0;
                     background: var(--bright-yellow);
-                    box-shadow: 0 .25rem 2rem #00000042;
+                    box-shadow: 0 .25rem 2rem #00000022;
                 }
             }
 
@@ -133,10 +133,18 @@
 
 @media screen and (min-width: 768px) {
     main {
-        width: 40rem;
+        width: 44rem;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         box-shadow: 0 .2rem 3rem #00000032;
+
+        section {
+            padding: calc(var(--space-base)* 1.5);
+
+            p {
+                line-height: 1.7;
+            }
+        }
 
         #community {
             grid-column: 1 / span 2;
