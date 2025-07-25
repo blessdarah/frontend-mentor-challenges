@@ -6,66 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
     <title>Frontend Mentor | Browser extensions manager UI</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
+    <main>
+        <header>
+            <img src="assets/images/logo.svg" alt="extensions logo icon" id="logo">
+            <img src="assets/images/icon-sun.svg" alt="sun icon for light theme" class="toggle-theme">
+            <!-- <img src="assets/images/icon-moon.svg" alt="moon icon for dark theme" class="toggle-theme"> -->
+        </header>
 
-    Extensions List
+        <div class="filter">
+            <h1>Extensions List</h1>
+            <div class="filter-options">
+                <button class="filter-option active" data-filter="all">All</button>
+                <button class="filter-option" data-filter="active">Active</button>
+                <button class="filter-option" data-filter="inactive">Inactive</button>
+            </div>
+        </div>
+        <template>
+            <div class="extension">
+                <header>
+                    <img src="assets/images/logo-devlens.svg" alt="DevLens logo">
+                    <div>
+                        <h2>SpeedBoost</h2>
+                        <p>Optimizes browser resource usage to accelerate page loading.</p>
+                    </div>
+                </header>
+                <footer>
+                    <button class="remove-extension">Remove</button>
+                    <button class="toggle-extension">Toggle</button>
+                </footer>
+            </div>
+        </template>
+        <section class="extensions">
+            <p>No extesions found yet</p>
+        </section>
+    </main>
 
-    All
-    Active
-    Inactive
-
-    <!-- If you plan to use the JSON file to populate the data dynamically, you can delete the content below -->
-
-    DevLens
-    Quickly inspect page layouts and visualize element boundaries.
-    Remove
-
-    StyleSpy
-    Instantly analyze and copy CSS from any webpage element.
-    Remove
-
-    SpeedBoost
-    Optimizes browser resource usage to accelerate page loading.
-    Remove
-
-    JSONWizard
-    Formats, validates, and prettifies JSON responses in-browser.
-    Remove
-
-    TabMaster Pro
-    Organizes browser tabs into groups and sessions.
-    Remove
-
-    ViewportBuddy
-    Simulates various screen resolutions directly within the browser.
-    Remove
-
-    Markup Notes
-    Enables annotation and notes directly onto webpages for collaborative debugging.
-    Remove
-
-    GridGuides
-    Overlay customizable grids and alignment guides on any webpage.
-    Remove
-
-    Palette Picker
-    Instantly extracts color palettes from any webpage.
-    Remove
-
-    LinkChecker
-    Scans and highlights broken links on any page.
-    Remove
-
-    DOM Snapshot
-    Capture and export DOM structures quickly.
-    Remove
-
-    ConsolePlus
-    Enhanced developer console with advanced filtering and logging.
-    Remove
-
+    <script src="index.js"></script>
 </body>
 
 </html>

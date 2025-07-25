@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@layer {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        /* Netural colors */
+        --neutral900: hsl(227, 75%, 14%);
+        --neutral800: hsl(226, 25%, 17%);
+        --neutral700: hsl(225, 23%, 24%);
+        --neutral600: hsl(226, 11%, 37%);
+        --neutral300: hsl(0, 0%, 78%);
+        --neutral200: hsl(217, 61%, 90%);
+        --neutral100: hsl(0, 0%, 93%);
+        --neutral: hsl(200, 60%, 99%);
+
+        --red400: hsl(3, 86%, 64%);
+        --red500: hsl(3, 71%, 56%);
+        --red700: hsl(3, 77%, 44%);
+
+        --lightGradient: linear-gradient(180deg, #EBF2FC 0%, #EEF8F9 100%);
+        --darkGradient: linear-gradient(180deg, #040918 0%, #091540 100%);
+
+        /* Font sizes */
+        --fontFamily: 'Noto Sans', sans-serif;
+    }
+
+    body {
+        font-size: 16px;
+        font-family: var(--fontFamily);
+        min-height: 100vh;
+        background: var(--darkGradient);
+        padding: 2rem;
+    }
+}
+
+.button,
+button {
+    border: 1px solid transparent;
+    background: var(--neutral200);
+    color: var(--neutral900);
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    border-radius: 1000px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    visibility: hidden;
+}
+
+input[type="checkbox"]:unchecked+label {
+    background: green;
+}
+
+input[type="checkbox"]:checked+label {
+    background: var(--red500);
+
+    /* &::before { */
+    /*     left: -2rem; */
+    /* } */
+}
+
+label {
+    --height: 1.2rem;
+    display: inline-block;
+    width: 2rem;
+    height: var(--height);
+    border-radius: 1000px;
+    background: var(--neutral100);
+    padding: 1px;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        position: absolute;
+        content: '';
+        display: block;
+        width: 60%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 1000px;
+        background: var(--neutral100)
+    }
+}
+
+main {
+    max-width: 80%;
+    margin: 0 auto;
+    color: var(--neutral100);
+    /* background: white; */
+
+    &>header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--neutral600);
+        padding: .5rem;
+        border-radius: 0.5rem;
+
+        #logo {
+            filter: invert(1);
+        }
+
+        .toggle-theme {
+            width: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            padding: .5rem;
+        }
+    }
+
+    .filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0;
+    }
+
+    .extensions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+
+        .extension {
+            padding: 1.2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--neutral600);
+            background: var(--neutral800);
+
+            header {
+                display: inline-flex;
+                margin-bottom: 3rem;
+                gap: .5rem;
+
+                h2 {
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                }
+
+                p {
+                    font-weight: 400;
+                }
+
+                img {
+                    align-self: flex-start;
+                }
+            }
+
+            footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+}
