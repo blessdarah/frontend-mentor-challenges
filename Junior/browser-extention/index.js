@@ -8,96 +8,24 @@
 
 const extensionContainer = document.querySelector(".extensions");
 const filterButtons = document.querySelectorAll(".filter-option");
+const addExtensionButton = document.querySelector("#add-extension");
+const dialog = document.querySelector("dialog");
 
-// TODO: Load extension data from a JSON file
-// TODO: Activate and Deactivete extensions
 const extensionManager = {
-  loadExtensions() {
-    this.initFilters();
+  async loadExtensions() {
+    // check local storage for extensions
+    const persistedExts = localStorage.getItem("extensions");
+    if (persistedExts) {
+      this.extensions = JSON.parse(persistedExts);
+    } else {
+      this.extensions = await fetch("./data.json").then((res) => res.json());
+      localStorage.setItem("extensions", JSON.stringify(this.extensions));
+    }
     this.renderExtensions(this.extensions);
+    this.initFilters();
+    this.initDialog();
   },
-  extensions /** @type Extension[] */: [
-    {
-      logo: "./assets/images/logo-devlens.svg",
-      name: "DevLens",
-      description:
-        "Quickly inspect page layouts and visualize element boundaries.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-style-spy.svg",
-      name: "StyleSpy",
-      description: "Instantly analyze and copy CSS from any webpage element.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-speed-boost.svg",
-      name: "SpeedBoost",
-      description:
-        "Optimizes browser resource usage to accelerate page loading.",
-      isActive: false,
-    },
-    {
-      logo: "./assets/images/logo-json-wizard.svg",
-      name: "JSONWizard",
-      description:
-        "Formats, validates, and prettifies JSON responses in-browser.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-tab-master-pro.svg",
-      name: "TabMaster Pro",
-      description: "Organizes browser tabs into groups and sessions.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-viewport-buddy.svg",
-      name: "ViewportBuddy",
-      description:
-        "Simulates various screen resolutions directly within the browser.",
-      isActive: false,
-    },
-    {
-      logo: "./assets/images/logo-markup-notes.svg",
-      name: "Markup Notes",
-      description:
-        "Enables annotation and notes directly onto webpages for collaborative debugging.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-grid-guides.svg",
-      name: "GridGuides",
-      description:
-        "Overlay customizable grids and alignment guides on any webpage.",
-      isActive: false,
-    },
-    {
-      logo: "./assets/images/logo-palette-picker.svg",
-      name: "Palette Picker",
-      description: "Instantly extracts color palettes from any webpage.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-link-checker.svg",
-      name: "LinkChecker",
-      description: "Scans and highlights broken links on any page.",
-      isActive: true,
-    },
-    {
-      logo: "./assets/images/logo-dom-snapshot.svg",
-      name: "DOM Snapshot",
-      description: "Capture and export DOM structures quickly.",
-      isActive: false,
-    },
-    {
-      logo: "./assets/images/logo-console-plus.svg",
-      name: "ConsolePlus",
-      description:
-        "Enhanced developer console with advanced filtering and logging.",
-      isActive: true,
-    },
-  ],
-
+  extensions /** @type Extension[] */: [],
   initFilters() {
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -110,6 +38,47 @@ const extensionManager = {
     });
   },
 
+  addExtension(event) {
+    event.preventDefault();
+    const form = event.target;
+    const extensionName = form.name.value;
+    const extensionDescription = form.description.value;
+    const randIndex = Math.floor(
+      Math.random() * extensionManager.extensions.length
+    );
+    const extension /** @type Extension */ = {
+      name: extensionName,
+      logo: extensionManager.extensions[randIndex].logo,
+      description: extensionDescription,
+      isActive: true,
+    };
+    extensionManager.extensions.push(extension);
+    // sycn extensions to local storage
+    localStorage.setItem(
+      "extensions",
+      JSON.stringify(extensionManager.extensions)
+    );
+    extensionManager.renderExtensions(extensionManager.extensions);
+    form.reset();
+    dialog.close();
+  },
+
+  /**
+   * @function addExtension - Adds an extension to the extensions list
+   * @param {Extension} extension
+   */
+  initDialog() {
+    addExtensionButton.addEventListener("click", () => {
+      const cancelButton = dialog.querySelector(".cancel");
+      const form = dialog.querySelector("form");
+      form.addEventListener("submit", extensionManager.addExtension);
+      cancelButton.onclick = () => {
+        form.reset();
+        dialog.close();
+      };
+      dialog.showModal();
+    });
+  },
   /**
    * This function allows us to have only one active button at a time
    * @function toggleActiveButton - Toggles active class on button
@@ -171,6 +140,11 @@ const extensionManager = {
       (extension) => extension.name === extensionName
     );
     this.extensions.splice(extIndex, 1);
+    // sync extensions to local storage
+    localStorage.setItem(
+      "extensions",
+      JSON.stringify(extensionManager.extensions)
+    );
     this.renderExtensions(this.extensions);
   },
 

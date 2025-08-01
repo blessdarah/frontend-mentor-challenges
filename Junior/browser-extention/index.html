@@ -17,8 +17,31 @@
             <!-- <img src="assets/images/icon-moon.svg" alt="moon icon for dark theme" class="toggle-theme"> -->
         </header>
 
+        <dialog>
+            <main>
+                <h1>Add an extension</h1>
+                <form>
+                    <div>
+                        <label for="extension-name">Extension name</label>
+                        <input type="text" id="extension-name" name="name" required>
+                    </div>
+                    <div>
+                        <label for="extension-description">Extension description</label>
+                        <textarea id="extension-description" name="description" required></textarea>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit">Add</button>
+                        <button type="button" class="cancel">Cancel</button>
+                    </div>
+                </form>
+            </main>
+        </dialog>
+
         <div class="filter">
-            <h1>Extensions List</h1>
+            <div>
+                <h1>Extensions List</h1>
+                <button id="add-extension">Add an extension</button>
+            </div>
             <div class="filter-options">
                 <button class="filter-option active" data-filter="all">All</button>
                 <button class="filter-option" data-filter="active">Active</button>
