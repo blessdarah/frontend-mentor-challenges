@@ -25,19 +25,31 @@ const extensionManager = {
     this.initFilters();
     this.initDialog();
   },
+
+  activeFilter: "all",
+
   extensions /** @type Extension[] */: [],
+
+  /**
+   * Initializes the filters buttons
+   * @function initFilters
+   */
   initFilters() {
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => {
         const filterAttr = button.dataset.filter;
+        extensionManager.activeFilter = filterAttr;
         extensionManager.toggleActiveButton(filterAttr);
-        extensionManager.renderExtensions(
-          extensionManager.filterExtensions(filterAttr)
-        );
+        extensionManager.renderExtensions(extensionManager.extensions);
       });
     });
   },
 
+  /**
+   * Adds an extension to the extensions list
+   * @function addExtension
+   * @param {Event} event
+   */
   addExtension(event) {
     event.preventDefault();
     const form = event.target;
@@ -99,7 +111,7 @@ const extensionManager = {
    */
   renderExtensions(list) {
     extensionContainer.innerHTML = "";
-    list.forEach((extension) => {
+    this.filterExtensions(this.activeFilter).forEach((extension) => {
       const extdata = this.createExtension(extension);
       extensionContainer.innerHTML += extdata.outerHTML;
     });
@@ -122,12 +134,48 @@ const extensionManager = {
             </div>
         </header>
         <footer>
-            <button class="remove-extension" onclick="extensionManager.removeExtension('${extension.name}')">Remove</button>
-            <input id="extension-${extension.name}" type="checkbox">
-            <label for="extension-${extension.name}" role="switch" class="toggle-extension">
-            </label>
+            <button class="remove-extension" onclick="extensionManager.removeExtension('${
+              extension.name
+            }')">Remove</button>
+            <input id="extension-${
+              extension.name
+            }" aria-hidden="true" type="checkbox" ${
+      extension.isActive ? "checked" : ""
+    } onchange="extensionManager.toggleExtension('${extension.name}')">
+            <label for="extension-${
+              extension.name
+            }" role="switch" tabindex="0" onkeydown="extensionManager.handleKeyboardEvent(event)" class="toggle-extension"></label>
         </footer>`;
     return extDiv;
+  },
+
+  /**
+   * Handles keyboard events on the toggle label
+   * @function handleKeyboardEvent - Handles keyboard events on the toggle label
+   * @param {Event} event
+   */
+  handleKeyboardEvent(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.currentTarget.click();
+    }
+  },
+
+  /**
+   * Toggles an extension's active state
+   * @function toggleExtension - Toggles an extension's active state
+   * @param {string} extensionName
+   */
+  toggleExtension(extensionName) {
+    const extIndex = this.extensions.findIndex(
+      (extension) => extension.name === extensionName
+    );
+    this.extensions[extIndex].isActive = !this.extensions[extIndex].isActive;
+    // sync extensions to local storage
+    localStorage.setItem(
+      "extensions",
+      JSON.stringify(extensionManager.extensions)
+    );
+    this.renderExtensions(this.extensions);
   },
 
   /**
@@ -140,6 +188,7 @@ const extensionManager = {
       (extension) => extension.name === extensionName
     );
     this.extensions.splice(extIndex, 1);
+
     // sync extensions to local storage
     localStorage.setItem(
       "extensions",

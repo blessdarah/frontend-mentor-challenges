@@ -3,7 +3,7 @@
         "logo": "./assets/images/logo-devlens.svg",
         "name": "DevLens",
         "description": "Quickly inspect page layouts and visualize element boundaries.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-style-spy.svg",
@@ -71,4 +71,4 @@
         "description": "Enhanced developer console with advanced filtering and logging.",
         "isActive": true
     }
-  ]
+]
